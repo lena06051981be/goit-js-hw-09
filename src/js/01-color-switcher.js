@@ -1,14 +1,16 @@
 const refs = {
   startBtn: document.querySelector('button[data-start]'),
   stopBtn: document.querySelector('button[data-stop]'),
-  body: document.querySelector('body'),
+  p: document.querySelector('p'),
 };
 console.log(refs.startBtn);
 console.log(refs.stopBtn);
-console.log(refs.body);
+console.log(refs.p);
 
 refs.startBtn.addEventListener('click', startChangeColorBody);
 refs.stopBtn.addEventListener('click', stopChangeColorBody);
+
+let timerId = '';
 
 function startChangeColorBody() {
   timerId = setInterval(() => {
@@ -16,31 +18,22 @@ function startChangeColorBody() {
     //   let color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
     console.log(color);
     document.body.style.backgroundColor = color;
-    // return color;
   }, 1000);
+  refs.startBtn.setAttribute('disabled', false);
+  refs.stopBtn.removeAttribute('disabled');
+  refs.p.innerHTML = '<p><a href="../index.html">Go back</a></p>';
 }
-
-// console.log(startChangeColorBody());
 
 function stopChangeColorBody() {
   clearInterval(timerId);
-  console.log(`notice: color change stopped, have a good day) `);
-  //   function note() {
-  //   let notice = null;
-  if (stopChangeColorBody === true) {
-    return;
-  }
-  notice = document.createElement('h2');
-  notice.textContent = 'notice: color change stopped, have a good day)';
-
-  refs.body.insertAdjacentHTML('beforeend', notice.textContent);
-  console.log(document.body.h2);
+  console.log(
+    `notice: color change stopped, push start to continue, have a good day) `
+  );
+  refs.p.innerHTML =
+    '<p><a href="../index.html">Go back</a> <b>notice</b>: color change stopped, push start to continue, have a good day)</p>';
+  refs.stopBtn.setAttribute('disabled', true);
+  refs.startBtn.removeAttribute('disabled');
 }
-//   return titleH1.append(`${title}: ${number}  `);
-//   const notice = document.createElement('h2');
-//   notice.textContent = 'notice: color change stopped, have a good day)';
-//   //     refs.body.append(notice);
-//   refs.body.insertAdjacentHTML('beforeend', notice.textContent);
 
 function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
