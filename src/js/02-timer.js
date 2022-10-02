@@ -1,11 +1,11 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-// import 'notiflix/dist/notiflix-3.2.5.min.css';
+import 'notiflix/dist/notiflix-3.2.5.min.css';
 
 const refs = {
   input: document.querySelector('#datetime-picker'),
-  startButton: document.querySelector('button[data-start]'),
+  startBtn: document.querySelector('button[data-start]'),
   days: document.querySelector('span[data-days]'),
   hours: document.querySelector('span[data-hours]'),
   minutes: document.querySelector('span[data-minutes]'),
@@ -13,7 +13,7 @@ const refs = {
 };
 console.log(refs.input);
 
-let intervalId = null;
+let timerId = null;
 
 const options = {
   enableTime: true,
@@ -34,7 +34,7 @@ const options = {
     refs.startBtn.removeAttribute('disabled');
 
     refs.startBtn.onclick = function () {
-      clearInterval(intervalId);
+      clearInterval(timerId);
       onTimer(time);
       refs.startBtn.setAttribute('disabled', true);
     };
@@ -48,12 +48,12 @@ function onTimer(time) {
   // refs.input.setAttribute('disabled', true);
   console.log('start timer:', time);
   renderTimer(convertMs(time));
-  intervalId = setInterval(() => {
+  timerId = setInterval(() => {
     console.log(time);
     time -= 1000;
     renderTimer(convertMs(time));
     if (time < 1000) {
-      clearInterval(intervalId);
+      clearInterval(timerId);
       Notify.success('Time is up!');
       // refs.input.removeAttribute('disabled');
       return;
